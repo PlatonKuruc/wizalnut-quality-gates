@@ -1,0 +1,26 @@
+[
+  {
+    "event": "Stop",
+    "matcher": "",
+    "file": "stop_no_fabricated_evidence.sh",
+    "timeout": null
+  },
+  {
+    "event": "PostToolUse",
+    "matcher": "Bash|Edit|Write|MultiEdit|NotebookEdit|Skill",
+    "file": "posttooluse_evidence_flags.sh",
+    "timeout": null
+  },
+  {
+    "event": "PreToolUse",
+    "matcher": "Bash",
+    "file": "pretooluse_git_discard_guard.sh",
+    "timeout": null
+  },
+  {
+    "event": "PreToolUse",
+    "matcher": "Bash",
+    "file": "pretooluse_secret_expansion_guard.sh",
+    "timeout": null
+  }
+]
