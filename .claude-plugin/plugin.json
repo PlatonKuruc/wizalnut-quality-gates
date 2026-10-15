@@ -1,0 +1,20 @@
+{
+  "name": "wizalnut-quality-gates",
+  "displayName": "Wizalnut Quality Gates (free starter)",
+  "version": "0.1.1",
+  "description": "Three gates for Claude Code: no \"fixed\" without a run, no discarding uncommitted work, no secret printed into the transcript.",
+  "author": {
+    "name": "Wizalnut (Epic production s.r.o.)",
+    "url": "https://wizalnut.com"
+  },
+  "homepage": "https://wizalnut.com/en/packs",
+  "repository": "https://github.com/PlatonKuruc/wizalnut-quality-gates",
+  "license": "MIT",
+  "keywords": [
+    "hooks",
+    "quality-gates",
+    "verification",
+    "git-safety",
+    "secrets"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "wizalnut",
+  "description": "Wizalnut packs for Claude Code",
+  "owner": {
+    "name": "Wizalnut (Epic production s.r.o.)",
+    "url": "https://wizalnut.com"
+  },
+  "plugins": [
+    {
+      "name": "wizalnut-quality-gates",
+      "source": "./",
+      "description": "Three gates: no \"fixed\" without a run, no discarding uncommitted work, no secret printed into the transcript."
+    }
+  ]
+}

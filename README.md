@@ -25,11 +25,20 @@ That is a real block, not a mockup.
 | **Git discard guard** | `pretooluse_git_discard_guard.sh` | `git checkout -- <path>`, `git restore`, `git reset --hard`, `git clean -f` when they would throw away uncommitted changes. Shows what would vanish. A clean tree passes silently. |
 | **Secret expansion guard** | `pretooluse_secret_expansion_guard.sh` | `echo $API_KEY`, `printenv TOKEN`, `env \| grep SECRET`, `${KEY:-default}`: anything that would print a secret variable's value into the transcript. Length and prefix checks pass. |
 
-Each gate ships with a canary test and a kill switch.
+Each gate ships with a canary test and a kill switch: `mkdir -p ~/.claude/hooks && touch ~/.claude/hooks/<NAME>_OFF`, with the name in each hook's header (for example `SECRET_EXPANSION_GUARD_OFF`). Installed as a plugin, all three switch off at once with `claude plugin disable wizalnut-quality-gates@wizalnut`.
 
 Requirements: Claude Code 2.x, bash (macOS 3.2 is fine), python3, jq, git.
 
-## Install
+## Install as a plugin
+
+```bash
+claude plugin marketplace add PlatonKuruc/wizalnut-quality-gates
+claude plugin install wizalnut-quality-gates@wizalnut
+```
+
+Or from inside a session: `/plugin marketplace add PlatonKuruc/wizalnut-quality-gates`, then `/plugin install wizalnut-quality-gates@wizalnut`. Start a new session afterwards; hooks load at session start. `claude plugin update wizalnut-quality-gates@wizalnut` gets the next version, `claude plugin uninstall wizalnut-quality-gates@wizalnut` removes it. Your `settings.json` is not touched.
+
+## Or install with the script
 
 ```bash
 git clone https://github.com/PlatonKuruc/wizalnut-quality-gates.git
@@ -41,15 +50,17 @@ QG_HOOKS_DIR=~/.claude/hooks bash ~/.claude/hooks/tests/run_tests.sh
 
 Start a new Claude Code session afterwards; hooks load at session start.
 
-Uninstall: `bash install.sh --uninstall`. A dated backup of `settings.json` is written before every change.
+Uninstall: `bash install.sh --uninstall`. A dated backup of `settings.json` is written before every change. The script needs `jq`; the plugin does not.
+
+Pick one way, not both: the plugin and the script together register every gate twice.
 
 ## See one fire in your own terminal
 
-A hook reads one JSON event on stdin. Exit code 2 is what tells Claude Code to stop.
+A hook reads one JSON event on stdin. Exit code 2 is what tells Claude Code to stop. From the cloned folder:
 
 ```bash
 echo '{"tool_name":"Bash","tool_input":{"command":"echo $DEMO_API_KEY"}}' \
-  | bash ~/.claude/hooks/pretooluse_secret_expansion_guard.sh; echo "exit $?"
+  | bash hooks/pretooluse_secret_expansion_guard.sh; echo "exit $?"
 ```
 
 You get `BLOCKED - this command would PRINT the value of a secret variable` and `exit 2`.
@@ -66,7 +77,7 @@ We run a video and automation studio on Claude Code: 130+ hooks, dozens of paral
 
 These three are the starter. The full pack is 16 gates and 6 skills: premise checks before the first edit, a brief checker for subagent prompts, a HEAD check before `commit --amend` and force-push, guards on `bash -x` over scripts that read keys, shell traps (`| grep -q` under `pipefail`, GNU `timeout` on macOS), conversation gates (vague prompts, three corrections in a row, "it doesn't work" without reading the logs), and the skills we audit our own work with — colombo, pta-gate, wald-principle, inversion, senior-review, brief-loop.
 
-→ **[wizalnut.com/en/packs](https://wizalnut.com/en/packs)** — €29. Same installer; run it on top of this one and it keeps one registration per gate.
+→ **[wizalnut.com/en/packs](https://wizalnut.com/en/packs)** — €29. Same installer; run it on top of the script install and it keeps one registration per gate. If you installed the plugin, uninstall it first.
 
 ## License
 
