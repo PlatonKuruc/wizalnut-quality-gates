@@ -69,6 +69,13 @@ echo '{"tool_name":"Bash","tool_input":{"command":"echo $DEMO_API_KEY"}}' \
 
 You get `BLOCKED - this command would PRINT the value of a secret variable` and `exit 2`.
 
+## Each gate on its own
+
+Want just one? Each gate is also its own plugin:
+[claude-code-done-gate](https://github.com/PlatonKuruc/claude-code-done-gate) ·
+[claude-code-git-discard-guard](https://github.com/PlatonKuruc/claude-code-git-discard-guard) ·
+[claude-code-secret-print-guard](https://github.com/PlatonKuruc/claude-code-secret-print-guard)
+
 ## Why gates and not instructions
 
 Every one of these started as a sentence in a memory file or in `CLAUDE.md`. The agent read the sentence and did the thing anyway, because at the moment of action the sentence was not in front of it. A hook runs at that exact moment, every time.
