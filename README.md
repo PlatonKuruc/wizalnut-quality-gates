@@ -2,6 +2,10 @@
 
 Three hooks that stop your agent from saying "fixed" when it never ran anything, from throwing away your uncommitted work, and from printing an API key into the transcript.
 
+These are 3 of the 16 hooks in the full **Wizalnut Quality Gates** pack (16 hooks and 6 skills, €29): https://wizalnut.com/en/packs
+
+Measured in our own studio: the done gate stopped 114 "done" claims that had no run after the last code edit, in 83 Claude Code sessions over 30 days (24 October – 22 November 2026), counted from the Stop-hook entries in our session transcripts.
+
 They run **at the moment of action**, deterministically, with no model in the loop. Exit code 2 blocks the action and tells the agent why.
 
 ```
